@@ -1,12 +1,12 @@
 export const site = {
   name: "FreeFlow Creative Hub",
   legalName: "FreeFlow Creative Hub Ltd.",
-  email: "hello@ffch.com",
+  email: "info@freeflowcreativehub.com",
   phone: "+234 806 2733 653",
-  instagram: "#",
-  facebook: "#",
-  linkedin: "#",
-  tiktok: "#",
+  instagram: "https://www.instagram.com/freeflowcreativehub",
+  facebook: "https://www.facebook.com/freeflowcreativehub",
+  linkedin: "https://www.linkedin.com/company/freeflowcreativehub",
+  tiktok: "https://www.tiktok.com/@freeflowcreativehub",
 };
 
 export const services = [
@@ -60,24 +60,24 @@ export const stats = [
   { value: "40+", label: "brands trusted us" },
   { value: "200+", label: "creatives trained" },
   { value: "03", label: "creative disciplines" },
-  { value: "∞", label: "ideas still to make" },
+  { value: "∞", label: "ideas to go" },
 ];
 
 export const webinars = [
   {
     title: "Practical Ways to Live a Creative Life",
     category: "Webinar 01.0",
-    image: "/images/webinars/practical-ways.jpg",
+    image: "/WEBINARS/Webinar1.jpg",
   },
   {
     title: "Doing More With Less",
     category: "Webinar 02.0",
-    image: "/images/webinars/doing-more-with-less.jpg",
+    image: "/WEBINARS/Webinar2.jpg",
   },
   {
     title: "Originality: Standing Out in the Copy & Paste World",
     category: "Webinar 03.0",
-    image: "/images/webinars/originality.jpg",
+    image: "/WEBINARS/Webinar3.jpg",
   },
 ];
 
@@ -85,27 +85,27 @@ export const workshops = [
   {
     title: "Accelerated Creative Writing Workshop",
     edition: "Word Flow Now 1.0",
-    image: "/images/workshops/word-flow-now-1.jpg",
+    image: "/WORKSHOPS/WFN1.jpg",
   },
   {
     title: "Accelerated Poetry Writing Workshop",
     edition: "Word Flow Now 2.0",
-    image: "/images/workshops/word-flow-now-2.jpg",
+    image: "/WORKSHOPS/WFN2.jpg",
   },
   {
     title: "Accelerated Creative Writing Workshop",
     edition: "Word Flow Now 3.0",
-    image: "/images/workshops/word-flow-now-3.jpg",
+    image: "/WORKSHOPS/WFN3.jpg",
   },
   {
     title: "Accelerated Creative Writing Workshop",
     edition: "Word Flow Now 4.0",
-    image: "/images/workshops/word-flow-now-4.jpg",
+    image: "/WORKSHOPS/WFN4.jpg",
   },
   {
     title: "Craft Like a Pro Wordsmith",
     edition: "Word Flow Now 5.0",
-    image: "/images/workshops/word-flow-now-5.jpg",
+    image: "/WORKSHOPS/WFN5.jpg",
   },
 ];
 
@@ -113,42 +113,42 @@ export const books = [
   {
     title: "What I Believe",
     author: "Doris G. Babalola",
-    image: "/images/books/what-i-believe.jpg",
+    image: "/WHAT-I-BELIEVE-MOCKUP-1.jpg",
   },
   {
     title: "Emergence",
     author: "Toluwani Adegoke",
-    image: "/images/books/emergence.jpg",
+    image: "/EMERGENCE-Book-Mockup-2.jpg",
   },
   {
     title: "How to Be an A-Grade Student",
     author: "Faith Omeje",
-    image: "/images/books/a-grade-student.jpg",
+    image: "/HOWTOBEBOOK.jpg",
   },
   {
     title: "Impact Driven Leadership",
     author: "Oyeyemi Odetola",
-    image: "/images/books/impact-driven-leadership.jpg",
+    image: "/IMPACT-DRIVEN-LEADERSHIP-Mockup-3.jpg",
   },
   {
     title: "Shards",
     author: "Joseph Olamide Babalola",
-    image: "/images/books/shards.jpg",
+    image: "/SARDS-Book_Mockup_3.jpg",
   },
   {
     title: "Sisi's Favourite Orphan",
     author: "Adejoke Asaolu",
-    image: "/images/books/sisis-favourite-orphan.jpg",
+    image: "/SISI_S-FAV-ock.jpg",
   },
   {
     title: "Training Manual",
     author: "Mary Ojonogeicha Ameh",
-    image: "/images/books/training-manual.jpg",
+    image: "/stem-garden-Mockup_1.jpg",
   },
   {
     title: "The Heroes Magazine",
     author: "Iroko Community Grammar School",
-    image: "/images/books/heroes-magazine.jpg",
+    image: "/HEROESMAGAZINECOVER.jpg",
   },
 ];
 
@@ -182,15 +182,27 @@ export const blogs = [
 export const testimonials = [
   {
     quote:
-      "FreeFlow didn't simply make us look better. They helped us understand what our brand was trying to become.",
-    name: "Creative Partner",
-    role: "Founder, Growth Brand",
+      "FFCH did an excellent job handling my book project... my vision as an author remained at the heart of the process. FFCH's ability to work within the timeline and still deliver the level of excellence is mind-blowing! Excellence and Integrity — my book came out as Global standard.",
+    name: "Oyeyemi Odetola",
+    role: "CEO, Impact-X Global Nexus",
   },
   {
     quote:
-      "The difference was in the thinking. Every design decision had a reason behind it.",
-    name: "Publishing Client",
-    role: "Author",
+      "FFCH is the reason EEC went from being unknown to actually being recognized... If you're a CEO who's serious about building a real brand identity, FFCH is a company I'd genuinely recommend.",
+    name: "Edward Akinwumi",
+    role: "CEO, Edwardian Educational Consult",
+  },
+  {
+    quote:
+      "FFCH took my rough 50-page draft and helped transform it into Emergence — over 100 pages — while preserving my words, my voice, my tone. They don't just help you create; they help you see your vision come alive.",
+    name: "Toluwani Samuel-Akinpelu",
+    role: "Team Lead, Confluence Impact IT",
+  },
+  {
+    quote:
+      "TMy experience with Freeflow Creative was smooth and beautiful from start to finish... If you need a one-stop team for your book-editing, layout, cover design and printing, I highly recommend Freeflow Creative",
+    name: "Faith Omeje",
+    role: "Founder, Teengress Africa",
   },
 ];
 

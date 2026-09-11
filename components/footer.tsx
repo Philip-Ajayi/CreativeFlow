@@ -77,7 +77,7 @@ export default function Footer() {
 
         <div className="mt-20 flex flex-col justify-between gap-4 border-t border-white/10 pt-5 text-[10px] uppercase tracking-[0.16em] text-[#70847c] md:flex-row">
           <span>© {new Date().getFullYear()} FreeFlow Creative Hub Ltd.</span>
-          <span>Ideas in motion.</span>
+          <span>Ideas to go.</span>
         </div>
       </div>
     </footer>

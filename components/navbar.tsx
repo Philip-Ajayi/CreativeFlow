@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 import { site } from "@/lib/data";
@@ -38,21 +39,17 @@ export default function Navbar() {
         <nav className="glass-dark mx-auto flex max-w-[1440px] items-center justify-between rounded-full px-4 py-3 md:px-5">
           <Link
             href="/"
-            className="group flex items-center gap-3"
+            className="flex items-center"
             onClick={() => setMenu(false)}
           >
-            <div className="grid h-9 w-9 place-items-center rounded-full bg-[#d6e86c] text-[#061f18]">
-              <span className="ff-display text-lg">F</span>
-            </div>
-
-            <div className="hidden sm:block">
-              <div className="ff-display text-[13px] uppercase tracking-[-0.02em]">
-                FreeFlow
-              </div>
-              <div className="ff-mono text-[8px] uppercase tracking-[0.18em] text-[#9eafa7]">
-                Creative Hub
-              </div>
-            </div>
+            <Image
+              src="/logo.png"
+              alt="FreeFlow Creative Hub"
+              width={180}
+              height={48}
+              className="h-10 w-auto object-contain"
+              priority
+            />
           </Link>
 
           <div className="hidden items-center gap-8 md:flex">
