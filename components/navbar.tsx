@@ -11,6 +11,19 @@ export default function Navbar() {
   const [menu, setMenu] = useState(false);
   const [lastScroll, setLastScroll] = useState(0);
 
+  // Prevent background scrolling when mobile menu is open
+  useEffect(() => {
+    if (menu) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [menu]);
+
   useEffect(() => {
     const onScroll = () => {
       const current = window.scrollY;
@@ -81,7 +94,6 @@ export default function Navbar() {
               PUBLISHING
             </a>
 
-
             <a
               href="#"
               className="text-xs font-semibold uppercase tracking-[0.16em] text-[#f3f3d9]/70 transition hover:text-[#d6e86c]"
@@ -115,36 +127,47 @@ export default function Navbar() {
         </nav>
       </header>
 
+      {/* Mobile Menu Overlay */}
       <div
-        className={`fixed inset-0 z-[70] bg-[#061f18] px-7 pt-32 transition-all duration-500 md:hidden ${
+        className={`fixed inset-0 z-[70] h-[100dvh] overflow-y-auto bg-[#061f18] px-7 pb-16 pt-32 transition-all duration-500 md:hidden ${
           menu
             ? "pointer-events-auto opacity-100"
             : "pointer-events-none opacity-0"
         }`}
       >
-        <div className="space-y-5">
-          {["Home", "About", "Branding", "Publishing", "Academy", "Journal", "Contact" ].map((item) => (
-            <Link
-              key={item}
-              href={
-                item === "Home"
-                  ? "/"
-                  : item === "About"
-                    ? "/about"
-                    : `/#${item.toLowerCase()}`
-              }
-              onClick={() => setMenu(false)}
-              className="ff-display block text-6xl uppercase leading-none text-[#f3f3d9]"
-            >
-              {item}
-            </Link>
-          ))}
-        </div>
+        <div className="flex min-h-full flex-col justify-between">
+          <div className="space-y-5">
+            {[
+              "Home",
+              "About",
+              "Branding",
+              "Publishing",
+              "Academy",
+              "Journal",
+              "Contact",
+            ].map((item) => (
+              <Link
+                key={item}
+                href={
+                  item === "Home"
+                    ? "/"
+                    : item === "About"
+                      ? "/about"
+                      : `/#${item.toLowerCase()}`
+                }
+                onClick={() => setMenu(false)}
+                className="ff-display block text-5xl uppercase leading-none text-[#f3f3d9] sm:text-6xl"
+              >
+                {item}
+              </Link>
+            ))}
+          </div>
 
-        <div className="mt-16 border-t border-white/10 pt-6">
-          <span className="ff-mono text-xs uppercase tracking-[0.2em] text-[#9eafa7]">
-            Let's make something worth remembering.
-          </span>
+          <div className="mt-12 border-t border-white/10 pt-6">
+            <span className="ff-mono text-xs uppercase tracking-[0.2em] text-[#9eafa7]">
+              Let's make something worth remembering.
+            </span>
+          </div>
         </div>
       </div>
     </>
