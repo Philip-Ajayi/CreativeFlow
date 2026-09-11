@@ -68,17 +68,39 @@ export default function Navbar() {
             </Link>
 
             <a
-              href="#work"
+              href="#"
               className="text-xs font-semibold uppercase tracking-[0.16em] text-[#f3f3d9]/70 transition hover:text-[#d6e86c]"
             >
-              Work
+              BRANDING
             </a>
 
             <a
-              href="#academy"
+              href="#"
               className="text-xs font-semibold uppercase tracking-[0.16em] text-[#f3f3d9]/70 transition hover:text-[#d6e86c]"
             >
-              Academy
+              BRANDING
+            </a>
+
+            <a
+              href="#"
+              className="text-xs font-semibold uppercase tracking-[0.16em] text-[#f3f3d9]/70 transition hover:text-[#d6e86c]"
+            >
+              PUBLISHING
+            </a>
+
+
+            <a
+              href="#"
+              className="text-xs font-semibold uppercase tracking-[0.16em] text-[#f3f3d9]/70 transition hover:text-[#d6e86c]"
+            >
+              ACADEMY
+            </a>
+
+            <a
+              href="#"
+              className="text-xs font-semibold uppercase tracking-[0.16em] text-[#f3f3d9]/70 transition hover:text-[#d6e86c]"
+            >
+              JOURNAL
             </a>
           </div>
 

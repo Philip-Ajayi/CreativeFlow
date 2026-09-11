@@ -44,11 +44,20 @@ export default function Footer() {
               <Link className="block hover:text-[#d6e86c]" href="/about">
                 About
               </Link>
-              <a className="block hover:text-[#d6e86c]" href="/#work">
-                Work
+              <a className="block hover:text-[#d6e86c]" href="#">
+                Branding
               </a>
-              <a className="block hover:text-[#d6e86c]" href="/#academy">
+              <a className="block hover:text-[#d6e86c]" href="#">
+                Publishing
+              </a>
+              <a className="block hover:text-[#d6e86c]" href="#">
                 Academy
+              </a>
+              <a className="block hover:text-[#d6e86c]" href="#">
+                Journal
+              </a>
+              <a className="block hover:text-[#d6e86c]" href="#">
+                Submit
               </a>
             </div>
           </div>
@@ -77,7 +86,7 @@ export default function Footer() {
 
         <div className="mt-20 flex flex-col justify-between gap-4 border-t border-white/10 pt-5 text-[10px] uppercase tracking-[0.16em] text-[#70847c] md:flex-row">
           <span>© {new Date().getFullYear()} FreeFlow Creative Hub Ltd.</span>
-          <span>Ideas to go.</span>
+          <span>The Flow You Need.</span>
         </div>
       </div>
     </footer>

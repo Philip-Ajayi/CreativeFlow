@@ -60,18 +60,18 @@ export default function Academy() {
               03 / Cre8ive Academy
             </div>
 
-            <h2 className="ff-display display-lg uppercase">
-              WRITING
+            <h2 className="ff-display display-lg">
+              <span className="uppercase">WELCOME TO THE ACADEMY</span>
               <br />
               <span className="ff-serif font-normal text-[#d6e86c]">
-                WORKSHOP
+                Where creatives
               </span>
               <br />
-              FOR YOUNG LEARNERS
+              learn and thrive
             </h2>
           </div>
 
-          <p className="max-w-md self-end text-sm leading-relaxed text-[#9eafa7] md:col-span-4">
+          <p className="max-w-md self-end text-base leading-relaxed text-[#aebfc7] md:col-span-4 md:text-lg">
             Workshops, webinars and mentorship designed to make creativity
             practical, accessible and impossible to keep bottled up.
           </p>

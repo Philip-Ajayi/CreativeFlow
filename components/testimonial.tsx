@@ -68,7 +68,7 @@ export default function Testimonial() {
                   ease: [0.22, 1, 0.36, 1],
                 }}
               >
-                <p className="ff-display text-4xl uppercase leading-[.94] tracking-[-.05em] md:text-7xl">
+                <p className="ff-display text-4xl leading-[.94] tracking-[-.05em] md:text-7xl">
                   “{testimonial.quote}”
                 </p>
 

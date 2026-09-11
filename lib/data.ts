@@ -65,9 +65,9 @@ export const stats = [
 
 export const webinars = [
   {
-    title: "Practical Ways to Live a Creative Life",
-    category: "Webinar 01.0",
-    image: "/WEBINARS/Webinar1.jpg",
+    title: "Originality: Standing Out in the Copy & Paste World",
+    category: "Webinar 03.0",
+    image: "/WEBINARS/Webinar3.jpg",
   },
   {
     title: "Doing More With Less",
@@ -75,17 +75,32 @@ export const webinars = [
     image: "/WEBINARS/Webinar2.jpg",
   },
   {
-    title: "Originality: Standing Out in the Copy & Paste World",
-    category: "Webinar 03.0",
-    image: "/WEBINARS/Webinar3.jpg",
+    title: "Practical Ways to Live a Creative Life",
+    category: "Webinar 01.0",
+    image: "/WEBINARS/Webinar1.jpg",
   },
 ];
 
 export const workshops = [
   {
     title: "Accelerated Creative Writing Workshop",
-    edition: "Word Flow Now 1.0",
-    image: "/WORKSHOPS/WFN1.jpg",
+    edition: "Word Flow Now 6.0",
+    image: "/WORKSHOPS/WFN6.jpg",
+  },
+  {
+    title: "Craft Like a Pro Wordsmith",
+    edition: "Word Flow Now 5.0",
+    image: "/WORKSHOPS/WFN5.jpg",
+  },
+  {
+    title: "Accelerated Creative Writing Workshop",
+    edition: "Word Flow Now 4.0",
+    image: "/WORKSHOPS/WFN4.jpg",
+  },
+  {
+    title: "Accelerated Creative Writing Workshop",
+    edition: "Word Flow Now 3.0",
+    image: "/WORKSHOPS/WFN3.jpg",
   },
   {
     title: "Accelerated Poetry Writing Workshop",
@@ -94,18 +109,8 @@ export const workshops = [
   },
   {
     title: "Accelerated Creative Writing Workshop",
-    edition: "Word Flow Now 3.0",
-    image: "/WORKSHOPS/WFN3.jpg",
-  },
-  {
-    title: "Accelerated Creative Writing Workshop",
-    edition: "Word Flow Now 4.0",
-    image: "/WORKSHOPS/WFN4.jpg",
-  },
-  {
-    title: "Craft Like a Pro Wordsmith",
-    edition: "Word Flow Now 5.0",
-    image: "/WORKSHOPS/WFN5.jpg",
+    edition: "Word Flow Now 1.0",
+    image: "/WORKSHOPS/WFN1.jpg",
   },
 ];
 
@@ -152,39 +157,13 @@ export const books = [
   },
 ];
 
-export const blogs = [
-  {
-    title: "The Creative Advantage: Why Original Thinking Still Wins",
-    summary:
-      "In a world overflowing with content, originality isn't about being strange. It's about seeing what everyone else has stopped noticing.",
-    image: "/images/blog/creative-advantage.jpg",
-    category: "Ideas",
-    date: "06 Sep 2026",
-  },
-  {
-    title: "What Happens When You Let an Idea Flow?",
-    summary:
-      "A field note on creativity, experimentation and making space for unfinished thoughts.",
-    image: "/images/blog/let-ideas-flow.jpg",
-    category: "Studio Notes",
-    date: "28 Aug 2026",
-  },
-  {
-    title: "The New Creative Economy Needs Better Storytellers",
-    summary:
-      "Why communication, culture and craft are becoming increasingly inseparable.",
-    image: "/images/blog/new-creative-economy.jpg",
-    category: "Culture",
-    date: "14 Aug 2026",
-  },
-];
 
 export const testimonials = [
   {
     quote:
       "FFCH did an excellent job handling my book project... my vision as an author remained at the heart of the process. FFCH's ability to work within the timeline and still deliver the level of excellence is mind-blowing! Excellence and Integrity — my book came out as Global standard.",
     name: "Oyeyemi Odetola",
-    role: "CEO, Impact-X Global Nexus",
+    role: "CEO, Impact-X Global Nexus / FFCH Author of Impact-Driven Leadership",
   },
   {
     quote:
@@ -196,13 +175,13 @@ export const testimonials = [
     quote:
       "FFCH took my rough 50-page draft and helped transform it into Emergence — over 100 pages — while preserving my words, my voice, my tone. They don't just help you create; they help you see your vision come alive.",
     name: "Toluwani Samuel-Akinpelu",
-    role: "Team Lead, Confluence Impact IT",
+    role: "Team Lead, Confluence Impact IT / FFCH Author of Emergence",
   },
   {
     quote:
-      "TMy experience with Freeflow Creative was smooth and beautiful from start to finish... If you need a one-stop team for your book-editing, layout, cover design and printing, I highly recommend Freeflow Creative",
+      "My experience with Freeflow Creative was smooth and beautiful from start to finish... If you need a one-stop team for your book-editing, layout, cover design and printing, I highly recommend Freeflow Creative",
     name: "Faith Omeje",
-    role: "Founder, Teengress Africa",
+    role: "Founder, Teengress Africa / FFCH Author of How to be an A-Grade student",
   },
 ];
 
