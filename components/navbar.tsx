@@ -78,13 +78,6 @@ export default function Navbar() {
               href="#"
               className="text-xs font-semibold uppercase tracking-[0.16em] text-[#f3f3d9]/70 transition hover:text-[#d6e86c]"
             >
-              BRANDING
-            </a>
-
-            <a
-              href="#"
-              className="text-xs font-semibold uppercase tracking-[0.16em] text-[#f3f3d9]/70 transition hover:text-[#d6e86c]"
-            >
               PUBLISHING
             </a>
 
@@ -130,7 +123,7 @@ export default function Navbar() {
         }`}
       >
         <div className="space-y-5">
-          {["Home", "About", "Work", "Academy"].map((item) => (
+          {["Home", "About", "Branding", "Publishing", "Academy", "Journal", "Contact" ].map((item) => (
             <Link
               key={item}
               href={
