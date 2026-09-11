@@ -61,7 +61,8 @@ export default function Services() {
                       {service.eyebrow}
                     </span>
 
-                    <h3 className="ff-display mt-5 uppercase leading-[.84] tracking-[-.07em]">
+                    {/* Acoustic font applied only to service titles */}
+                    <h3 className="font-acoustic font-bold mt-5 uppercase leading-[.84] tracking-[-.07em]">
                       <span className="block text-2xl tracking-normal opacity-80 md:text-3xl">
                         {firstWord}
                       </span>

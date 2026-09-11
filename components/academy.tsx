@@ -67,7 +67,7 @@ export default function Academy() {
                 WORKSHOP
               </span>
               <br />
-              FOR YOUNG LERANERS
+              FOR YOUNG LEARNERS
             </h2>
           </div>
 

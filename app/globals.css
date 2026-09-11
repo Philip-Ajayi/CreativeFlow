@@ -1,3 +1,4 @@
+
 @import "tailwindcss";
 
 :root {
@@ -35,7 +36,8 @@ body {
     ),
     var(--forest-deep);
   color: var(--cream);
-  font-family: Arial, Helvetica, sans-serif;
+  /* Set Akrobat as the default font for the entire site */
+  font-family: var(--font-akrobat), Arial, sans-serif;
   overflow-x: hidden;
 }
 
@@ -58,10 +60,16 @@ img {
   max-width: 100%;
 }
 
+/* Base typography utilities */
 .ff-display {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-akrobat), Arial, sans-serif;
   font-weight: 800;
-  letter-spacing: -0.075em;
+  letter-spacing: -0.05em;
+}
+
+/* Dedicated Font Utility for Acoustic */
+.font-acoustic {
+  font-family: var(--font-acoustic), Arial, sans-serif;
 }
 
 .ff-serif {
