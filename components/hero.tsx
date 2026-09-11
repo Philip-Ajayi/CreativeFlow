@@ -27,7 +27,7 @@ export default function Hero() {
               className="ff-mono mb-7 flex items-center gap-3 text-[10px] uppercase tracking-[0.3em] text-[#d6e86c]"
             >
               <span className="h-1.5 w-1.5 rounded-full bg-[#d6e86c] shadow-[0_0_15px_#d6e86c]" />
-              Wekcome to the flow you need...
+              Welcome to the flow you need...
             </motion.div>
 
             {/* Typography & Animated Rocket Container */}
