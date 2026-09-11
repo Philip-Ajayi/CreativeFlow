@@ -33,7 +33,7 @@ const akrobat = localFont({
 const acoustic = localFont({
   src: [
     {
-      path: "../public/fonts/StyleScript-Regular.ttf",
+      path: "../public/fonts/BrittanySignature.ttf",
       weight: "700",
       style: "normal",
     },
