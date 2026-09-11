@@ -61,13 +61,13 @@ export default function Academy() {
             </div>
 
             <h2 className="ff-display display-lg uppercase">
-              BRINGING
+              WRITING
               <br />
               <span className="ff-serif font-normal text-[#d6e86c]">
-                YOUNG IMAGINATIONS
+                WORKSHOP
               </span>
               <br />
-              TO LIFE
+              FOR YOUNG LERANERS
             </h2>
           </div>
 
