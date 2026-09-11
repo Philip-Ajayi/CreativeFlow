@@ -62,7 +62,7 @@ export default function Services() {
                     </span>
 
                     <h3 className="mt-5 font-bold leading-[.84] tracking-[-.07em]">
-                      <span className="font-acoustic block text-2xl uppercase tracking-normal opacity-80 md:text-3xl">
+                      <span className="font-acoustic block text-2xl tracking-normal opacity-80 md:text-3xl">
                         {firstWord}
                       </span>
                       <span className="block text-5xl md:text-7xl">
