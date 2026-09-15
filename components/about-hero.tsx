@@ -1,3 +1,4 @@
+//components\about-hero.tsx
 "use client";
 
 import { motion } from "framer-motion";
@@ -11,7 +12,7 @@ export default function AboutHero() {
           animate={{ opacity: 1 }}
           className="ff-mono mb-6 text-[10px] uppercase tracking-[.3em] text-[#d6e86c]"
         >
-          About the studio
+          ABOUT THE FFCH BRAND
         </motion.div>
 
         <motion.h1
