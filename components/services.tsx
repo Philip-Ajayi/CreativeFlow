@@ -62,7 +62,7 @@ export default function Services() {
                     </span>
 
                     <h3 className="mt-5 font-bold leading-[.84] tracking-[-.07em]">
-                      <span className="font-acoustic block text-2xl tracking-normal opacity-80 md:text-3xl">
+                      <span className="font-acoustic block text-2xl uppercase tracking-normal opacity-80 md:text-3xl">
                         {firstWord}
                       </span>
                       <span className="block text-5xl md:text-7xl">
@@ -72,7 +72,8 @@ export default function Services() {
                   </div>
 
                   <div className="md:col-span-4 md:col-start-9">
-                    <p className="mb-7 max-w-sm text-sm leading-relaxed opacity-70">
+                    {/* Updated: Increased description text size */}
+                    <p className="mb-7 max-w-sm text-base md:text-lg leading-relaxed opacity-70">
                       {service.description}
                     </p>
 
@@ -80,11 +81,12 @@ export default function Services() {
                       {service.items.map((item) => (
                         <li
                           key={item}
-                          className="flex items-center justify-between border-b border-current/15 py-3 text-xs"
+                          /* Updated: Increased item text size */
+                          className="flex items-center justify-between border-b border-current/15 py-3 text-sm md:text-base"
                         >
                           <span>{item}</span>
                           <Plus
-                            size={14}
+                            size={16}
                             className="opacity-40 transition group-hover:rotate-90"
                           />
                         </li>
