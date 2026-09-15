@@ -1,3 +1,4 @@
+//app\page.tsx
 import Hero from "@/components/hero";
 import Stats from "@/components/stats";
 import Services from "@/components/services";
@@ -64,7 +65,7 @@ export default function HomePage() {
               </p>
 
               <a
-                href="mailto:hello@ffch.com"
+                href="info@freeflowcreativehub.com"
                 className="ff-button ff-button-dark mt-7"
               >
                 Start the conversation
