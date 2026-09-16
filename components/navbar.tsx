@@ -154,7 +154,9 @@ export default function Navbar() {
                     ? "/"
                     : item === "About"
                       ? "/about"
-                      : `/#${item.toLowerCase()}`
+                      : item === "Branding"
+                        ? "/branding"
+                        : `/#${item.toLowerCase()}`
                 }
                 onClick={() => setMenu(false)}
                 className="ff-display block text-5xl uppercase leading-none text-[#f3f3d9] sm:text-6xl"
