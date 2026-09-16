@@ -1,3 +1,4 @@
+//components\navbar.tsx
 "use client";
 
 import Link from "next/link";
@@ -81,7 +82,7 @@ export default function Navbar() {
             </Link>
 
             <a
-              href="#"
+              href="/branding"
               className="text-xs font-semibold uppercase tracking-[0.16em] text-[#f3f3d9]/70 transition hover:text-[#d6e86c]"
             >
               BRANDING
