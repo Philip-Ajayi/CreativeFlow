@@ -12,7 +12,7 @@ export default function Events() {
         <div className="mb-14 flex flex-col justify-between gap-5 md:flex-row md:items-end">
           <div>
             <div className="ff-mono mb-5 text-[10px] uppercase tracking-[.3em] text-[#d6e86c]">
-              05 / What's next
+              What's next
             </div>
 
             <h2 className="ff-display display-md uppercase">

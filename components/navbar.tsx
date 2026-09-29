@@ -1,11 +1,20 @@
-//components\navbar.tsx
+// components/navbar.tsx
 "use client";
 
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { ArrowUpRight, Menu, X } from "lucide-react";
-import { site } from "@/lib/data";
+
+const navLinks = [
+  { name: "Home", href: "/" },
+  { name: "About", href: "/about" },
+  { name: "Branding", href: "/branding" },
+  { name: "Publishing", href: "/publishing" },
+  { name: "Academy", href: "/academy" },
+  { name: "Journal", href: "/journal" },
+  { name: "Contact", href: "/contact" },
+];
 
 export default function Navbar() {
   const [hidden, setHidden] = useState(false);
@@ -66,58 +75,29 @@ export default function Navbar() {
             />
           </Link>
 
-          <div className="hidden items-center gap-8 md:flex">
-            <Link
-              href="/"
-              className="text-xs font-semibold uppercase tracking-[0.16em] text-[#f3f3d9]/70 transition hover:text-[#d6e86c]"
-            >
-              Home
-            </Link>
-
-            <Link
-              href="/about"
-              className="text-xs font-semibold uppercase tracking-[0.16em] text-[#f3f3d9]/70 transition hover:text-[#d6e86c]"
-            >
-              About
-            </Link>
-
-            <a
-              href="/branding"
-              className="text-xs font-semibold uppercase tracking-[0.16em] text-[#f3f3d9]/70 transition hover:text-[#d6e86c]"
-            >
-              BRANDING
-            </a>
-
-            <a
-              href="#"
-              className="text-xs font-semibold uppercase tracking-[0.16em] text-[#f3f3d9]/70 transition hover:text-[#d6e86c]"
-            >
-              PUBLISHING
-            </a>
-
-            <a
-              href="#"
-              className="text-xs font-semibold uppercase tracking-[0.16em] text-[#f3f3d9]/70 transition hover:text-[#d6e86c]"
-            >
-              ACADEMY
-            </a>
-
-            <a
-              href="#"
-              className="text-xs font-semibold uppercase tracking-[0.16em] text-[#f3f3d9]/70 transition hover:text-[#d6e86c]"
-            >
-              JOURNAL
-            </a>
+          {/* Desktop Navigation Links */}
+          <div className="hidden items-center gap-6 lg:gap-8 md:flex">
+            {navLinks.map((link) => (
+              <Link
+                key={link.name}
+                href={link.href}
+                className="text-xs font-semibold uppercase tracking-[0.16em] text-[#f3f3d9]/70 transition hover:text-[#d6e86c]"
+              >
+                {link.name}
+              </Link>
+            ))}
           </div>
 
-          <a
-            href={`mailto:${site.email}`}
+          {/* Desktop "Start a project" CTA */}
+          <Link
+            href="/submit"
             className="hidden items-center gap-2 rounded-full bg-[#d6e86c] px-5 py-3 text-xs font-black uppercase tracking-[0.1em] text-[#061f18] transition hover:-translate-y-0.5 md:flex"
           >
             Start a project
             <ArrowUpRight size={14} />
-          </a>
+          </Link>
 
+          {/* Mobile Menu Toggle Button */}
           <button
             onClick={() => setMenu(!menu)}
             className="grid h-11 w-11 place-items-center rounded-full border border-white/10 bg-white/5 md:hidden"
@@ -137,37 +117,32 @@ export default function Navbar() {
         }`}
       >
         <div className="flex min-h-full flex-col justify-between">
-          <div className="space-y-5">
-            {[
-              "Home",
-              "About",
-              "Branding",
-              "Publishing",
-              "Academy",
-              "Journal",
-              "Contact",
-            ].map((item) => (
+          {/* Mobile Navigation Links */}
+          <div className="space-y-4">
+            {navLinks.map((link) => (
               <Link
-                key={item}
-                href={
-                  item === "Home"
-                    ? "/"
-                    : item === "About"
-                      ? "/about"
-                      : item === "Branding"
-                        ? "/branding"
-                        : `/#${item.toLowerCase()}`
-                }
+                key={link.name}
+                href={link.href}
                 onClick={() => setMenu(false)}
-                className="ff-display block text-5xl uppercase leading-none text-[#f3f3d9] sm:text-6xl"
+                className="ff-display block text-4xl uppercase leading-none text-[#f3f3d9] sm:text-5xl"
               >
-                {item}
+                {link.name}
               </Link>
             ))}
           </div>
 
-          <div className="mt-12 border-t border-white/10 pt-6">
-            <span className="ff-mono text-xs uppercase tracking-[0.2em] text-[#9eafa7]">
+          {/* Mobile Footer Area with CTA */}
+          <div className="mt-10 space-y-6 border-t border-white/10 pt-6">
+            <Link
+              href="/submit"
+              onClick={() => setMenu(false)}
+              className="flex w-full items-center justify-between rounded-full bg-[#d6e86c] px-6 py-4 text-xs font-black uppercase tracking-[0.1em] text-[#061f18] transition active:scale-[0.98]"
+            >
+              <span>Start a project</span>
+              <ArrowUpRight size={16} />
+            </Link>
+
+            <span className="ff-mono block text-xs uppercase tracking-[0.2em] text-[#9eafa7]">
               Let's make something worth remembering.
             </span>
           </div>

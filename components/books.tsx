@@ -12,7 +12,7 @@ export default function Books() {
         <div className="mb-14 flex flex-col justify-between gap-7 md:flex-row md:items-end">
           <div>
             <div className="ff-mono mb-5 text-[10px] uppercase tracking-[0.3em] text-[#d6e86c]">
-              02 / Publishing
+              Publishing
             </div>
 
             <h2 className="ff-display display-md uppercase">

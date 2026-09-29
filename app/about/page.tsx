@@ -1,3 +1,4 @@
+//app\about\page.tsx
 import AboutHero from "@/components/about-hero";
 import AboutStory from "@/components/about-story";
 import AboutPhilosophy from "@/components/about-philosophy";

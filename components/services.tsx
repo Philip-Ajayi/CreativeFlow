@@ -11,7 +11,7 @@ export default function Services() {
         <div className="mb-20 grid gap-10 md:grid-cols-12">
           <div className="md:col-span-7">
             <div className="ff-mono mb-5 text-[10px] uppercase tracking-[0.3em] opacity-50">
-              01 / What we do
+              What we do
             </div>
 
             <h2 className="ff-display display-lg uppercase">

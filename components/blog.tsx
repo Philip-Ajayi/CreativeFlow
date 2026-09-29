@@ -66,7 +66,7 @@ export default function Blog() {
         <div className="mb-14 flex items-end justify-between">
           <div>
             <div className="ff-mono mb-5 text-[10px] uppercase tracking-[.3em] opacity-50">
-              04 / Journal
+              Journal
             </div>
 
             <h2 className="ff-display display-md uppercase">

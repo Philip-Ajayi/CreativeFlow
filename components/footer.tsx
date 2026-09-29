@@ -45,20 +45,23 @@ export default function Footer() {
               <Link className="block hover:text-[#d6e86c]" href="/about">
                 About
               </Link>
-              <a className="block hover:text-[#d6e86c]" href="#">
+              <a className="block hover:text-[#d6e86c]" href="/branding">
                 Branding
               </a>
-              <a className="block hover:text-[#d6e86c]" href="#">
+              <a className="block hover:text-[#d6e86c]" href="/publishing">
                 Publishing
               </a>
-              <a className="block hover:text-[#d6e86c]" href="#">
+              <a className="block hover:text-[#d6e86c]" href="/academy">
                 Academy
               </a>
-              <a className="block hover:text-[#d6e86c]" href="#">
+              <a className="block hover:text-[#d6e86c]" href="/journal">
                 Journal
               </a>
-              <a className="block hover:text-[#d6e86c]" href="#">
+              <a className="block hover:text-[#d6e86c]" href="/submit">
                 Submit
+              </a>
+              <a className="block hover:text-[#d6e86c]" href="/contact">
+                Contact
               </a>
             </div>
           </div>

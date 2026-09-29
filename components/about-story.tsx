@@ -10,7 +10,7 @@ export default function AboutStory() {
         <div className="grid gap-16 md:grid-cols-12">
           <div className="md:col-span-4">
             <div className="ff-mono sticky top-28 text-[10px] uppercase tracking-[.25em] opacity-45">
-              01 / The idea
+             The idea
             </div>
           </div>
 

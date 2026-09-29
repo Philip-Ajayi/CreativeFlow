@@ -35,7 +35,7 @@ export default function AboutPillars() {
         <div className="mb-16 flex items-end justify-between">
           <div>
             <div className="ff-mono mb-5 text-[10px] uppercase tracking-[.3em] opacity-50">
-              03 / Three worlds
+              Three worlds
             </div>
 
             <h2 className="ff-display display-md uppercase">

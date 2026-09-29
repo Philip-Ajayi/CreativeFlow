@@ -10,7 +10,7 @@ export default function AboutPhilosophy() {
       <div className="container-ff">
         <div className="mb-20 md:mb-28">
           <div className="ff-mono mb-5 text-[10px] uppercase tracking-[.3em] text-[#d6e86c]">
-            02 / How we work
+            How we work
           </div>
 
           <h2 className="ff-display display-lg max-w-5xl uppercase">
