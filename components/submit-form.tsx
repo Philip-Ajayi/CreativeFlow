@@ -8,6 +8,8 @@ export default function SubmitForm() {
   const [file, setFile] = useState<File | null>(null);
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -23,15 +25,45 @@ export default function SubmitForm() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
 
-    // Simulate submission flow
-    setTimeout(() => {
-      setLoading(false);
+    if (!file) {
+      setErrorMessage("Please attach a document (.doc or .docx) before submitting.");
+      return;
+    }
+
+    setLoading(true);
+    setErrorMessage(null);
+
+    try {
+      const data = new FormData();
+      data.append("fullName", formData.fullName);
+      data.append("email", formData.email);
+      data.append("category", formData.category);
+      data.append("title", formData.title);
+      data.append("bio", formData.bio);
+      data.append("simultaneous", String(formData.simultaneous));
+      data.append("file", file);
+
+      const response = await fetch("/api/submit", {
+        method: "POST",
+        body: data,
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || "Failed to submit. Please try again.");
+      }
+
       setSubmitted(true);
-    }, 1500);
+    } catch (err: any) {
+      console.error("Submission failed:", err);
+      setErrorMessage(err.message || "An unexpected error occurred.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -74,6 +106,7 @@ export default function SubmitForm() {
                 onClick={() => {
                   setSubmitted(false);
                   setFile(null);
+                  setErrorMessage(null);
                   setFormData({
                     fullName: "",
                     email: "",
@@ -93,6 +126,12 @@ export default function SubmitForm() {
               onSubmit={handleSubmit}
               className="rounded-[2.5rem] border border-[#061f18]/15 bg-[#f3f3d9] p-8 shadow-2xl md:p-14"
             >
+              {errorMessage && (
+                <div className="mb-6 rounded-2xl bg-red-500/10 p-4 border border-red-500/30 text-red-800 text-sm font-semibold text-center">
+                  {errorMessage}
+                </div>
+              )}
+
               <div className="grid gap-8 md:grid-cols-2">
                 {/* Full Name */}
                 <div>
@@ -194,7 +233,7 @@ export default function SubmitForm() {
                 <div className="relative rounded-2xl border-2 border-dashed border-[#061f18]/20 bg-black/5 p-8 text-center transition hover:border-[#0c3b2e]">
                   <input
                     type="file"
-                    accept=".doc,.docx"
+                    accept=".doc,.docx,.pdf"
                     required
                     onChange={handleFileChange}
                     className="absolute inset-0 cursor-pointer opacity-0"
@@ -242,7 +281,7 @@ export default function SubmitForm() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="ff-button ff-button-dark w-full md:w-auto"
+                  className="ff-button ff-button-dark w-full md:w-auto disabled:opacity-50"
                 >
                   {loading ? (
                     <span className="flex items-center gap-2">

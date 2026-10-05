@@ -1,4 +1,3 @@
-//components\blog.tsx
 "use client";
 
 import { useEffect, useState } from "react";
@@ -9,7 +8,7 @@ interface BlogPost {
   title: string;
   summary: string;
   post: string;
-  category: string;
+  categories: string[]; // Updated to accept array of hashtags/categories from RSS API
   image: string | null;
   date: string | null;
   time: string | null;
@@ -100,7 +99,9 @@ export default function Blog() {
             <div>
               <div className="mb-10 flex items-center justify-between">
                 <span className="ff-mono text-[9px] uppercase tracking-[.2em] text-[#d6e86c]">
-                  Featured story
+                  {featured.categories?.[0]
+                    ? `#${featured.categories[0]}`
+                    : "Featured story"}
                 </span>
 
                 <span className="ff-mono text-[9px] text-[#9eafa7]">
@@ -149,9 +150,11 @@ export default function Blog() {
                 </div>
 
                 <div>
-                  <div className="ff-mono text-[8px] uppercase tracking-[.2em] opacity-45">
-                    {blog.category}
-                  </div>
+                  {blog.categories?.[0] && (
+                    <div className="ff-mono text-[8px] uppercase tracking-[.2em] opacity-45">
+                      #{blog.categories[0]}
+                    </div>
+                  )}
 
                   <h3 className="mt-2 text-lg font-bold leading-tight group-hover:underline">
                     {blog.title}

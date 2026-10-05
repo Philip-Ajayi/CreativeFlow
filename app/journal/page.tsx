@@ -1,34 +1,84 @@
-// app/journal/page.tsx
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowUpRight, Search, Sparkles, Tag, Clock } from "lucide-react";
-import { JOURNAL_POSTS, JournalPost } from "@/lib/journal-data";
+import { ArrowUpRight, Search, Sparkles, Tag, Clock, Loader2 } from "lucide-react";
 
-const CATEGORIES = ["All", "Branding", "Publishing", "Culture", "Process", "Academy"] as const;
+export interface JournalPost {
+  id: string;
+  slug: string;
+  title: string;
+  summary: string;
+  post: string;
+  categories: string[];
+  image: string | null;
+  date: string | null;
+  time: string | null;
+  publishedAt: string | null;
+  url: string | null;
+  author: string;
+  readTime: string;
+}
 
 export default function JournalPage() {
+  const [posts, setPosts] = useState<JournalPost[]>([]);
+  const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [searchQuery, setSearchQuery] = useState("");
 
-  // Filter posts based on category and search query
+  useEffect(() => {
+    async function fetchPosts() {
+      try {
+        const res = await fetch("/api/blog");
+        const data = await res.json();
+
+        if (data.success && Array.isArray(data.posts)) {
+          setPosts(data.posts);
+        }
+      } catch (err) {
+        console.error("Failed to load journal posts:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchPosts();
+  }, []);
+
+  // Dynamically extract unique categories/hashtags from posts
+  const categories = useMemo(() => {
+    const allTags = posts.flatMap((p) => p.categories || []);
+    return ["All", ...Array.from(new Set(allTags))];
+  }, [posts]);
+
+  // Filter posts by category and search term
   const filteredPosts = useMemo(() => {
-    return JOURNAL_POSTS.filter((post) => {
+    return posts.filter((post) => {
       const matchesCategory =
-        selectedCategory === "All" || post.category === selectedCategory;
+        selectedCategory === "All" ||
+        post.categories?.includes(selectedCategory);
+
       const matchesSearch =
         post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         post.summary.toLowerCase().includes(searchQuery.toLowerCase());
+
       return matchesCategory && matchesSearch;
     });
-  }, [selectedCategory, searchQuery]);
+  }, [posts, selectedCategory, searchQuery]);
 
-  // Featured post spotlight
-  const featuredPost = useMemo(() => {
-    return JOURNAL_POSTS.find((post) => post.featured) || JOURNAL_POSTS[0];
-  }, []);
+  const featuredPost = posts[0];
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#0c3b2e] flex flex-col items-center justify-center text-[#f3f3d9]">
+        <Loader2 className="animate-spin text-[#d6e86c] mb-4" size={32} />
+        <p className="ff-mono text-xs uppercase tracking-[.2em] text-[#9eafa7]">
+          Loading Journal...
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#0c3b2e] text-[#f3f3d9]">
@@ -40,7 +90,7 @@ export default function JournalPage() {
             animate={{ opacity: 1, y: 0 }}
             className="ff-mono mb-6 text-[10px] uppercase tracking-[.3em] text-[#d6e86c]"
           >
-          Journal & Insights
+            Journal & Insights
           </motion.div>
 
           <div className="grid gap-10 md:grid-cols-12 md:items-end">
@@ -67,7 +117,7 @@ export default function JournalPage() {
         </div>
       </section>
 
-      {/* Featured Spotlight Article (Only shows when no active search query) */}
+      {/* Featured Spotlight Article */}
       {!searchQuery && selectedCategory === "All" && featuredPost && (
         <section className="container-ff mb-20">
           <motion.div
@@ -77,11 +127,15 @@ export default function JournalPage() {
             className="group relative overflow-hidden rounded-[2.5rem] bg-[#061f18] border border-white/10 grid md:grid-cols-12"
           >
             <div className="media-wrap aspect-[16/10] md:aspect-auto md:col-span-7 relative min-h-[350px]">
-              <img
-                src={featuredPost.image}
-                alt={featuredPost.title}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
+              {featuredPost.image ? (
+                <img
+                  src={featuredPost.image}
+                  alt={featuredPost.title}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+              ) : (
+                <div className="h-full w-full bg-[#123f32]" />
+              )}
               <div className="absolute top-6 left-6 flex items-center gap-2 rounded-full bg-[#061f18]/80 backdrop-blur-md px-4 py-1.5 border border-white/15">
                 <Sparkles size={12} className="text-[#d6e86c]" />
                 <span className="ff-mono text-[9px] uppercase tracking-[.2em] text-[#d6e86c]">
@@ -93,7 +147,11 @@ export default function JournalPage() {
             <div className="p-8 md:p-12 md:col-span-5 flex flex-col justify-between">
               <div>
                 <div className="flex items-center justify-between text-xs text-[#9eafa7] ff-mono mb-6">
-                  <span>{featuredPost.category}</span>
+                  <span>
+                    {featuredPost.categories?.[0]
+                      ? `#${featuredPost.categories[0]}`
+                      : "General"}
+                  </span>
                   <span>{featuredPost.date}</span>
                 </div>
 
@@ -112,7 +170,7 @@ export default function JournalPage() {
                 </span>
 
                 <Link
-                  href={`/journal/${featuredPost.id}`}
+                  href={`/journal/${featuredPost.slug}`}
                   className="ff-button ff-button-primary inline-flex items-center gap-2 text-xs"
                 >
                   <span>Read Article</span>
@@ -129,7 +187,7 @@ export default function JournalPage() {
         <div className="glass-dark rounded-full p-2 border border-white/10 flex flex-col md:flex-row items-center justify-between gap-4 backdrop-blur-xl">
           {/* Category Filter Pills */}
           <div className="flex items-center gap-1.5 overflow-x-auto w-full md:w-auto px-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            {CATEGORIES.map((cat) => (
+            {categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setSelectedCategory(cat)}
@@ -139,7 +197,7 @@ export default function JournalPage() {
                     : "text-[#f3f3d9]/70 hover:text-white hover:bg-white/5"
                 }`}
               >
-                {cat}
+                {cat === "All" ? cat : `#${cat}`}
               </button>
             ))}
           </div>
@@ -175,7 +233,7 @@ export default function JournalPage() {
               {filteredPosts.map((post) => (
                 <motion.article
                   layout
-                  key={post.id}
+                  key={post.slug}
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
@@ -184,26 +242,33 @@ export default function JournalPage() {
                 >
                   <div>
                     {/* Post Image Wrap */}
-                    <Link href={`/journal/${post.id}`}>
+                    <Link href={`/journal/${post.slug}`}>
                       <div className="media-wrap aspect-[16/10] rounded-xl overflow-hidden mb-6 bg-[#123f32]">
-                        <img
-                          src={post.image}
-                          alt={post.title}
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                        />
+                        {post.image ? (
+                          <img
+                            src={post.image}
+                            alt={post.title}
+                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                          />
+                        ) : (
+                          <div className="h-full w-full bg-[#123f32]" />
+                        )}
                       </div>
                     </Link>
 
                     {/* Metadata */}
                     <div className="flex items-center justify-between text-[10px] ff-mono uppercase tracking-[.18em] text-[#d6e86c] mb-3">
                       <span className="flex items-center gap-1">
-                        <Tag size={11} /> {post.category}
+                        <Tag size={11} />{" "}
+                        {post.categories?.[0]
+                          ? `#${post.categories[0]}`
+                          : "General"}
                       </span>
                       <span className="text-[#9eafa7]">{post.date}</span>
                     </div>
 
                     {/* Title & Excerpt */}
-                    <Link href={`/journal/${post.id}`}>
+                    <Link href={`/journal/${post.slug}`}>
                       <h3 className="ff-display text-2xl uppercase leading-snug tracking-tight group-hover:text-[#d6e86c] transition-colors">
                         {post.title}
                       </h3>
@@ -221,7 +286,7 @@ export default function JournalPage() {
                     </span>
 
                     <Link
-                      href={`/journal/${post.id}`}
+                      href={`/journal/${post.slug}`}
                       className="grid h-9 w-9 place-items-center rounded-full bg-white/5 text-[#d6e86c] group-hover:bg-[#d6e86c] group-hover:text-[#061f18] transition-all"
                     >
                       <ArrowUpRight size={16} />

@@ -34,43 +34,56 @@ export async function GET() {
     const data = parser.parse(xml);
 
     const items = data?.rss?.channel?.item ?? [];
+    const itemArray = Array.isArray(items) ? items : [items];
 
-    const posts = (Array.isArray(items) ? items : [items]).map(
-      (item: any) => {
-        const title = cleanText(item.title);
-        const summary = cleanText(item.description);
+    const posts = itemArray.map((item: any) => {
+      const title = cleanText(item.title);
+      const summary = cleanText(item.description);
 
-        const rawPost =
-          typeof item["content:encoded"] === "object"
-            ? item["content:encoded"]?.__cdata ??
-              item["content:encoded"]?.["#text"] ??
-              ""
-            : item["content:encoded"] ?? "";
+      const rawPost =
+        typeof item["content:encoded"] === "object"
+          ? item["content:encoded"]?.__cdata ??
+            item["content:encoded"]?.["#text"] ??
+            ""
+          : item["content:encoded"] ?? "";
 
-        const post = removeImages(rawPost);
+      const post = removeImages(rawPost);
 
-        const image =
-          item.enclosure?.["@_url"] ??
-          extractFirstImage(rawPost) ??
-          null;
+      const image =
+        item.enclosure?.["@_url"] ?? extractFirstImage(rawPost) ?? null;
 
-        const pubDate = item.pubDate
-          ? new Date(item.pubDate)
-          : null;
+      const pubDate = item.pubDate ? new Date(item.pubDate) : null;
+      const categories = extractHashtags(rawPost, item.category);
 
-        return {
-          title,
-          summary,
-          post,
-          image,
-          date: pubDate ? formatDate(pubDate) : null,
-          time: pubDate ? formatTime(pubDate) : null,
-          publishedAt: pubDate?.toISOString() ?? null,
-          url: item.link ?? null,
-          author: cleanText(item["dc:creator"]),
-        };
-      }
-    );
+      // Derive slug from Substack link or fallback to title
+      const linkUrl = item.link ?? "";
+      const slug =
+        linkUrl.split("/p/")[1]?.replace(/\/$/, "") ||
+        title
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, "-")
+          .replace(/(^-|-$)/g, "");
+
+      // Estimate reading time based on word count
+      const wordCount = cleanText(rawPost).split(/\s+/).length;
+      const readTime = `${Math.max(1, Math.ceil(wordCount / 200))} min read`;
+
+      return {
+        id: slug,
+        slug,
+        title,
+        summary,
+        post,
+        categories,
+        image,
+        date: pubDate ? formatDate(pubDate) : null,
+        time: pubDate ? formatTime(pubDate) : null,
+        publishedAt: pubDate?.toISOString() ?? null,
+        url: linkUrl || null,
+        author: cleanText(item["dc:creator"]) || "FreeFlow Team",
+        readTime,
+      };
+    });
 
     return NextResponse.json({
       success: true,
@@ -90,52 +103,66 @@ export async function GET() {
   }
 }
 
-/**
- * Remove images from the article HTML.
- *
- * This removes:
- * - <img>
- * - <picture>
- * - <figure> containing images
- * - Substack image containers
- */
+function extractHashtags(htmlContent: string, fallbackCategoryData?: any): string[] {
+  if (!htmlContent) return getFallbackCategories(fallbackCategoryData);
+  const plainText = htmlContent.replace(/<[^>]*>/g, " ");
+  const matches = plainText.match(/#([a-zA-Z0-9_]+)/g);
+
+  if (matches && matches.length > 0) {
+    const uniqueTags = Array.from(
+      new Set(matches.map((tag) => tag.replace("#", "").trim()))
+    );
+    return uniqueTags.length > 0 ? uniqueTags : getFallbackCategories(fallbackCategoryData);
+  }
+
+  return getFallbackCategories(fallbackCategoryData);
+}
+
+function getFallbackCategories(categoryData: any): string[] {
+  const category = extractCategory(categoryData);
+  return category ? [category] : ["General"];
+}
+
+function extractCategory(categoryData: any): string {
+  if (!categoryData) return "General";
+  if (typeof categoryData === "string") return cleanText(categoryData) || "General";
+
+  if (Array.isArray(categoryData) && categoryData.length > 0) {
+    const firstCat = categoryData[0];
+    if (typeof firstCat === "string") return cleanText(firstCat) || "General";
+    if (typeof firstCat === "object") {
+      const val = firstCat.__cdata ?? firstCat["#text"] ?? "";
+      return cleanText(val) || "General";
+    }
+  }
+
+  if (typeof categoryData === "object") {
+    const val = categoryData.__cdata ?? categoryData["#text"] ?? "";
+    return cleanText(val) || "General";
+  }
+
+  return "General";
+}
+
 function removeImages(html: string): string {
   if (!html) return "";
-
   return html
-    .replace(
-      /<div[^>]*class=["'][^"']*captioned-image-container[^"']*["'][^>]*>[\s\S]*?<\/div>\s*<\/div>/gi,
-      ""
-    )
+    .replace(/<div[^>]*class=["'][^"']*captioned-image-container[^"']*["'][^>]*>[\s\S]*?<\/div>\s*<\/div>/gi, "")
     .replace(/<picture[\s\S]*?<\/picture>/gi, "")
     .replace(/<img\b[^>]*>/gi, "")
     .replace(/<figure[\s\S]*?<\/figure>/gi, "")
     .trim();
 }
 
-/**
- * Get the first image from the article if the RSS
- * enclosure is unavailable.
- */
 function extractFirstImage(html: string): string | null {
   if (!html) return null;
-
   const match = html.match(/<img[^>]+src=["']([^"']+)["']/i);
-
   return match?.[1] ?? null;
 }
 
-/**
- * Convert RSS title/description/CDATA to clean text.
- */
 function cleanText(value: any): string {
   if (!value) return "";
-
-  const text =
-    typeof value === "object"
-      ? value.__cdata ?? value["#text"] ?? ""
-      : String(value);
-
+  const text = typeof value === "object" ? value.__cdata ?? value["#text"] ?? "" : String(value);
   return text
     .replace(/<[^>]*>/g, "")
     .replace(/&nbsp;/gi, " ")
@@ -147,9 +174,6 @@ function cleanText(value: any): string {
     .trim();
 }
 
-/**
- * Format date in a readable form.
- */
 function formatDate(date: Date): string {
   return new Intl.DateTimeFormat("en-NG", {
     day: "numeric",
@@ -159,9 +183,6 @@ function formatDate(date: Date): string {
   }).format(date);
 }
 
-/**
- * Format publication time.
- */
 function formatTime(date: Date): string {
   return new Intl.DateTimeFormat("en-NG", {
     hour: "numeric",

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowUpRight, Check, Copy, Mail, MapPin, Send, Sparkles } from "lucide-react";
+import { ArrowUpRight, Check, Copy, Mail, MapPin, Send, Sparkles, AlertCircle } from "lucide-react";
 import { site } from "@/lib/data";
 
 const servicesList = [
@@ -17,6 +17,13 @@ export default function ContactSection() {
   const [copied, setCopied] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(site.email);
@@ -24,15 +31,45 @@ export default function ContactSection() {
     setTimeout(() => setCopied(false), 2500);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setErrorMessage(null);
 
-    // Simulate form dispatch delay
-    setTimeout(() => {
-      setLoading(false);
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          service: selectedService,
+          message: formData.message,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to submit form.");
+      }
+
       setSubmitted(true);
-    }, 1200);
+      setFormData({ name: "", email: "", message: "" });
+    } catch (err: any) {
+      setErrorMessage(err.message || "Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -59,6 +96,7 @@ export default function ContactSection() {
             {/* Interactive Copy Email Box */}
             <div className="mt-8">
               <button
+                type="button"
                 onClick={handleCopyEmail}
                 className="group flex w-full items-center justify-between rounded-2xl border border-[#0c3b2e]/15 bg-[#0c3b2e]/5 p-4 transition hover:bg-[#0c3b2e] hover:text-[#f3f3d9]"
               >
@@ -172,6 +210,7 @@ export default function ContactSection() {
                     <span className="text-[#f3f3d9] font-semibold">{selectedService}</span> and will reach out shortly.
                   </p>
                   <button
+                    type="button"
                     onClick={() => setSubmitted(false)}
                     className="ff-button ff-button-primary mt-8"
                   >
@@ -181,6 +220,13 @@ export default function ContactSection() {
               ) : (
                 <form onSubmit={handleSubmit} className="mt-10 space-y-8">
                   
+                  {errorMessage && (
+                    <div className="flex items-center gap-2 rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-xs text-red-400">
+                      <AlertCircle size={16} className="shrink-0" />
+                      <span>{errorMessage}</span>
+                    </div>
+                  )}
+
                   {/* Service Choice Pills */}
                   <div>
                     <label className="ff-mono block text-[10px] uppercase tracking-[.2em] text-[#9eafa7]">
@@ -207,24 +253,32 @@ export default function ContactSection() {
                   {/* Inputs */}
                   <div className="grid gap-6 sm:grid-cols-2">
                     <div>
-                      <label className="ff-mono block text-[10px] uppercase tracking-[.2em] text-[#9eafa7]">
+                      <label htmlFor="name" className="ff-mono block text-[10px] uppercase tracking-[.2em] text-[#9eafa7]">
                         Your Name *
                       </label>
                       <input
+                        id="name"
+                        name="name"
                         type="text"
                         required
+                        value={formData.name}
+                        onChange={handleChange}
                         placeholder="e.g. Jane Doe"
                         className="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3.5 text-sm text-[#f3f3d9] placeholder-[#9eafa7]/40 outline-none transition focus:border-[#d6e86c]"
                       />
                     </div>
 
                     <div>
-                      <label className="ff-mono block text-[10px] uppercase tracking-[.2em] text-[#9eafa7]">
+                      <label htmlFor="email" className="ff-mono block text-[10px] uppercase tracking-[.2em] text-[#9eafa7]">
                         Email Address *
                       </label>
                       <input
+                        id="email"
+                        name="email"
                         type="email"
                         required
+                        value={formData.email}
+                        onChange={handleChange}
                         placeholder="jane@example.com"
                         className="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3.5 text-sm text-[#f3f3d9] placeholder-[#9eafa7]/40 outline-none transition focus:border-[#d6e86c]"
                       />
@@ -233,12 +287,16 @@ export default function ContactSection() {
 
                   {/* Message Input */}
                   <div>
-                    <label className="ff-mono block text-[10px] uppercase tracking-[.2em] text-[#9eafa7]">
+                    <label htmlFor="message" className="ff-mono block text-[10px] uppercase tracking-[.2em] text-[#9eafa7]">
                       Project Details / Notes *
                     </label>
                     <textarea
+                      id="message"
+                      name="message"
                       required
                       rows={5}
+                      value={formData.message}
+                      onChange={handleChange}
                       placeholder="Tell us about the project goals, timeline, or any specific ideas you have..."
                       className="mt-2 w-full rounded-xl border border-white/10 bg-white/5 p-4 text-sm text-[#f3f3d9] placeholder-[#9eafa7]/40 outline-none transition focus:border-[#d6e86c]"
                     />
@@ -248,7 +306,7 @@ export default function ContactSection() {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="ff-button ff-button-primary w-full sm:w-auto"
+                    className="ff-button ff-button-primary w-full sm:w-auto disabled:opacity-50"
                   >
                     <span>{loading ? "Sending..." : "Submit Project Form"}</span>
                     <Send size={15} />

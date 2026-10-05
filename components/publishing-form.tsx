@@ -2,11 +2,14 @@
 
 import { useState, ChangeEvent, FormEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { CheckCircle2, Send, Paperclip } from "lucide-react";
+import { CheckCircle2, Send, Paperclip, AlertCircle } from "lucide-react";
 
 export default function PublishingForm() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [fileName, setFileName] = useState<string | null>(null);
 
   const [formData, setFormData] = useState({
@@ -76,18 +79,57 @@ export default function PublishingForm() {
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      setFileName(e.target.files[0].name);
+      const file = e.target.files[0];
+      setSelectedFile(file);
+      setFileName(file.name);
     }
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setErrorMessage(null);
 
-    setTimeout(() => {
-      setLoading(false);
+    try {
+      const payload = new FormData();
+      payload.append("fullName", formData.fullName);
+      payload.append("email", formData.email);
+      payload.append("phone", formData.phone);
+      payload.append("location", formData.location);
+      payload.append("referralSource", formData.referralSource);
+      payload.append("workingTitle", formData.workingTitle);
+      payload.append("genre", formData.genre);
+      payload.append("oneLineDescription", formData.oneLineDescription);
+      payload.append("manuscriptStage", formData.manuscriptStage);
+      payload.append("wordOrPageCount", formData.wordOrPageCount);
+      payload.append("services", JSON.stringify(formData.services));
+      payload.append("targetTimeline", formData.targetTimeline);
+      payload.append("anythingElse", formData.anythingElse);
+
+      if (selectedFile) {
+        payload.append("file", selectedFile);
+      }
+
+      const res = await fetch("/api/publish", {
+        method: "POST",
+        body: payload,
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(
+          errorData.error || "Failed to submit request. Please try again."
+        );
+      }
+
       setSubmitted(true);
-    }, 1200);
+    } catch (err: any) {
+      setErrorMessage(
+        err.message || "An unexpected error occurred. Please try again."
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -138,7 +180,23 @@ export default function PublishingForm() {
                 <button
                   onClick={() => {
                     setSubmitted(false);
+                    setSelectedFile(null);
                     setFileName(null);
+                    setFormData({
+                      fullName: "",
+                      email: "",
+                      phone: "",
+                      location: "",
+                      referralSource: "",
+                      workingTitle: "",
+                      genre: "fiction",
+                      oneLineDescription: "",
+                      manuscriptStage: "first draft",
+                      wordOrPageCount: "",
+                      services: [],
+                      targetTimeline: "",
+                      anythingElse: "",
+                    });
                   }}
                   className="ff-button ff-button-primary mt-10"
                 >
@@ -153,6 +211,13 @@ export default function PublishingForm() {
                 onSubmit={handleSubmit}
                 className="space-y-12"
               >
+                {errorMessage && (
+                  <div className="flex items-center gap-3 rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-red-200">
+                    <AlertCircle size={20} className="shrink-0" />
+                    <span className="text-sm">{errorMessage}</span>
+                  </div>
+                )}
+
                 {/* Section 1 — About you */}
                 <div className="space-y-6">
                   <div className="border-b border-white/10 pb-3">

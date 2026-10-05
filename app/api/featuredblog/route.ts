@@ -59,13 +59,14 @@ export async function GET() {
         ? new Date(item.pubDate)
         : null;
 
-      const category = extractCategory(item.category);
+      // Extract hashtags as categories from content (or fall back to item.category)
+      const categories = extractHashtags(rawPost, item.category);
 
       return {
         title,
         summary,
         post,
-        category,
+        categories,
         image,
         date: pubDate ? formatDate(pubDate) : null,
         time: pubDate ? formatTime(pubDate) : null,
@@ -94,8 +95,38 @@ export async function GET() {
 }
 
 /**
+ * Extract unique hashtags from post HTML content.
+ * Falls back to RSS category or "General" if no hashtags are present.
+ */
+function extractHashtags(htmlContent: string, fallbackCategoryData?: any): string[] {
+  if (!htmlContent) return getFallbackCategories(fallbackCategoryData);
+
+  // Strip HTML tags so attributes/links aren't parsed as hashtags
+  const plainText = htmlContent.replace(/<[^>]*>/g, " ");
+
+  // Match hashtags (e.g. #creativewriting, #cw6, #OriginalityMatters)
+  const matches = plainText.match(/#([a-zA-Z0-9_]+)/g);
+
+  if (matches && matches.length > 0) {
+    // Deduplicate and strip leading '#' symbol
+    const uniqueTags = Array.from(
+      new Set(matches.map((tag) => tag.replace("#", "").trim()))
+    );
+
+    return uniqueTags.length > 0 ? uniqueTags : getFallbackCategories(fallbackCategoryData);
+  }
+
+  return getFallbackCategories(fallbackCategoryData);
+}
+
+/**
  * Helper to retrieve category or fall back to "General".
  */
+function getFallbackCategories(categoryData: any): string[] {
+  const category = extractCategory(categoryData);
+  return category ? [category] : ["General"];
+}
+
 function extractCategory(categoryData: any): string {
   if (!categoryData) return "General";
 
