@@ -5,7 +5,7 @@ import { Resend } from 'resend';
 import clientPromise from '@/lib/mongodb';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-const PARENT_FOLDER_ID = process.env.PARENT_FOLDER_ID || '1y9MngJySG7SwjG_J3TaMnj-GV9lBCHHA';
+const PARENT_FOLDER_ID = process.env.PARENT_FOLDER_ID || '14iI2h8_dbxqelOHwkyV6aq6aeHLxnWm0';
 
 function getDriveClient() {
   const auth = new google.auth.GoogleAuth({
