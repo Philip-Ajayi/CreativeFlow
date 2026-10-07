@@ -15,7 +15,7 @@ export async function POST(req: Request) {
     }
 
     const senderEmail = process.env.RESEND_FROM_EMAIL || "onboarding@resend.dev";
-    const recipientCompanyEmail = process.env.COMPANY_EMAIL || "iyunademadebowale@gmail.com";
+    const recipientCompanyEmail = process.env.COMPANY_EMAIL || "info@freeflowcreativehub.com";
 
     // 1. Send notification email to company
     const companyEmailPromise = resend.emails.send({
