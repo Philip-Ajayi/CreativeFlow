@@ -5,7 +5,7 @@ import { Resend } from 'resend';
 import clientPromise from '@/lib/mongodb';
 
 const PARENT_FOLDER_ID = process.env.PARENT_FOLDER_ID || '1y9MngJySG7SwjG_J3TaMnj-GV9lBCHHA';
-const COMPANY_EMAIL = process.env.COMPANY_EMAIL || 'company@company.com';
+const COMPANY_EMAIL = process.env.COMPANY_EMAIL || 'info@freeflowcreativehub.com';
 const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
