@@ -131,7 +131,7 @@ export async function POST(req: Request) {
 
     // 5. Send Email via Resend
     const fromEmail = process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev';
-    const companyEmail = process.env.COMPANY_EMAIL || 'company@company.com';
+    const companyEmail = process.env.COMPANY_EMAIL || 'info@freeflowcreativehub.com';
 
     // A. Confirmation Email to the Submitter
     await resend.emails.send({
